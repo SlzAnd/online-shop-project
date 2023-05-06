@@ -7,6 +7,7 @@ import com.andrii.eshop.s3.S3Service;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -40,14 +41,32 @@ public class ProductService {
         else return new Product();
     }
 
-    public Product updateProductById(int product_id) {
-        return new Product();
-        // TODO: call to repo -> find product by ID -> update product
+    public Product updateProductById(long product_id,
+                                     String name,
+                                     Double price,
+                                     Integer quantity,
+                                     String description) {
+        Product product = getProduct(product_id);
+        if (product != null) {
+            if (name != null) {
+                product.setName(name);
+            }
+            if (price != null) {
+                product.setPrice(price);
+            }
+            if (quantity != null) {
+                product.setQuantity(quantity);
+            }
+            if (description != null) {
+                product.setDescription(description);
+            }
+            repository.save(product);
+        }
+        return product;
     }
 
     public void deleteProductById(long product_id) {
         repository.deleteById(product_id);
-        // TODO: call to repo -> find product by ID -> delete this product
     }
 
     public void addNewProduct(Product product) {
@@ -80,7 +99,7 @@ public class ProductService {
         if(repository.findById(productId).isPresent())
             product = repository.findById(productId).get();
         else
-            throw new IllegalArgumentException("No product with this productId");
+            return null;
         return product;
     }
 }

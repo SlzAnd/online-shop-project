@@ -43,13 +43,13 @@ public class Product {
             name = "price",
             nullable = false
     )
-    private double price;
+    private Double price;
 
     @Column(
             name = "quantity",
             nullable = false
     )
-    private int quantity;
+    private Integer quantity;
 
     @Column(
             name = "description",
