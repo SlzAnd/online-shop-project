@@ -62,9 +62,7 @@ public class ProductsController {
                                                  @RequestParam(required = false) String name,
                                                  @RequestParam(required = false) Double price,
                                                  @RequestParam(required = false) Integer quantity,
-                                                 @RequestParam(required = false) String description
-    ) {
-        // TODO: implement call to service for updating the product by id 13
+                                                 @RequestParam(required = false) String description) {
         Product product = service.updateProductById(product_id, name, price, quantity, description);
         if (product != null)
             return ResponseEntity.ok(product);
@@ -78,21 +76,6 @@ public class ProductsController {
     }
 
 
-    @PostMapping(
-            value = "/{productId}/product-image",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
-    public ResponseEntity uploadProductImage(@PathVariable long productId,
-                                             @RequestParam MultipartFile file) {
 
-        service.uploadProductImage(productId, file);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/{productId}/product-image")
-    public byte[] getProductImage(@PathVariable long productId) {
-
-        return service.getProductImage(productId);
-    }
 
 }
