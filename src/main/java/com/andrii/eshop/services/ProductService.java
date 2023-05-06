@@ -91,7 +91,9 @@ public class ProductService {
 
     public byte[] getProductImage(Long productId) {
         Product currentProduct = getProduct(productId);
-        return s3Service.downloadImage(s3Buckets.getProductImagesBucket(), currentProduct.getImageFolder());
+        if(currentProduct != null)
+            return s3Service.downloadImage(s3Buckets.getProductImagesBucket(), currentProduct.getImageFolder());
+        else return new byte[0];
     }
 
     private Product getProduct(Long productId) {
