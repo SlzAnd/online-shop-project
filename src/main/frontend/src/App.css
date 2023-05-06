@@ -1,0 +1,223 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.productCard {
+  background: #fafafa;
+  margin: 10px auto 20px;
+  padding: 5px;
+  height: 100%;
+  width: 900px;
+  border: 2px solid darkgrey;
+}
+
+.dropzone {
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto 10px;
+  padding: 20px;
+  cursor: pointer;
+  height: 100px;
+  width: 300px;
+  border: 2px dashed #274C5B;
+  outline: none;
+  font-family: Roboto, sans-serif;
+  color: #555;
+}
+
+.dropzoneReject {
+  border: 2px dashed red;
+}
+
+.dropzoneAccept {
+  border: 2px dashed green;
+}
+
+.addProductForm {
+  width: 100%;
+  margin: 20px auto 5px;
+  background-color: #FFFFFF;
+  border: 2px solid darkgrey;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ReactModal__Content {
+  width: 50%;
+  height: 100%;
+  margin: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addProductForm h1 {
+  color: #274C5B;
+  font-family: Roboto, sans-serif;
+  font-size: 20px;
+}
+
+.label {
+  font-size: 16px;
+  color: #555;
+  text-transform: capitalize;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input {
+  outline: none;
+  margin: 0;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  width: 300px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.input--style-4 {
+  line-height: 50px;
+  background: #fafafa;
+  -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0 20px;
+  font-size: 16px;
+  color: #666;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.input--style-4::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: #666;
+}
+
+.input--style-4:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #666;
+  opacity: 1;
+}
+
+.input--style-4::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #666;
+  opacity: 1;
+}
+
+.input--style-4:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #666;
+}
+
+.input--style-4:-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #666;
+}
+
+.text-area {
+  width: 330px;
+  height: 120px;
+  border: 1px solid #cccccc;
+  background: #fafafa;
+  -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: Tahoma, sans-serif;
+  resize: none;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #274C5B;
+  line-height: 50px;
+  padding: 0 50px;
+  margin-bottom: 20px;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  font-size: 18px;
+  color: #FFFFFF;
+  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+}
+
+.link-btn {
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #FFFFFF;
+  background-color: #274C5B;
+  font-family: "Roboto", "Poppins", "Arial", "Helvetica Neue", sans-serif;
+
+
+
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
