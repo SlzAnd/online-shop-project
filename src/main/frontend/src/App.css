@@ -28,6 +28,11 @@
   color: #61dafb;
 }
 
+.MuiMenu-paper {
+  width: 200px;
+  height: 125px;
+}
+
 .productCard {
   background: #fafafa;
   margin: 10px auto 20px;
@@ -199,19 +204,17 @@ input {
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
 
-.link-btn {
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: #FFFFFF;
-  background-color: #274C5B;
-  font-family: "Roboto", "Poppins", "Arial", "Helvetica Neue", sans-serif;
-
-
-
-}
+/*.link-btn {*/
+/*  border: none;*/
+/*  cursor: pointer;*/
+/*  display: inline-block;*/
+/*  padding: 5px 10px;*/
+/*  border-radius: 5px;*/
+/*  color: #FFFFFF;*/
+/*  background-color: #274C5B;*/
+/*  font-family: "Roboto", "Poppins", "Arial", "Helvetica Neue", sans-serif;*/
+/*  font-weight: bold;*/
+/*}*/
 
 @keyframes App-logo-spin {
   from {

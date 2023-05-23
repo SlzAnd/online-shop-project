@@ -7,13 +7,13 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "aws.s3.buckets")
 public class S3Buckets {
 
-    private String productImagesBucket;
+    private String productImagesBucketName;
 
-    public String getProductImagesBucket() {
-        return productImagesBucket;
+    public String getProductImagesBucketName() {
+        return productImagesBucketName;
     }
 
-    public void setProductImagesBucket(String productImages) {
-        this.productImagesBucket = productImages;
+    public void setProductImagesBucketName(String productImages) {
+        this.productImagesBucketName = productImages;
     }
 }

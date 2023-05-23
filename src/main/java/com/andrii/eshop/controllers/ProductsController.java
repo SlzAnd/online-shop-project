@@ -1,6 +1,7 @@
 package com.andrii.eshop.controllers;
 
 import com.andrii.eshop.models.Product;
+import com.andrii.eshop.services.ProductImagesService;
 import com.andrii.eshop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,13 @@ import java.util.List;
 public class ProductsController {
 
     public final ProductService service;
+    public final ProductImagesService imagesService;
 
 
     @Autowired
-    public ProductsController(ProductService productService) {
+    public ProductsController(ProductService productService, ProductImagesService imagesService) {
         this.service = productService;
+        this.imagesService = imagesService;
     }
 
 
@@ -36,8 +39,11 @@ public class ProductsController {
 
 
     @GetMapping("/{product_id}")
-    public Product getProduct(@PathVariable int product_id) {
-        return service.findProductById(product_id);
+    public ResponseEntity<Product> getProduct(@PathVariable int product_id) {
+        Product product = service.findProductById(product_id);
+        if (product != null)
+            return ResponseEntity.ok(product);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
 
@@ -49,11 +55,11 @@ public class ProductsController {
                                         @RequestParam int quantity,
                                         @RequestParam String description,
                                         @RequestParam List<MultipartFile> files) {
-        Product product = new Product(name,price,quantity,description);
-        service.addNewProduct(product);
-        System.out.println(product.getId());
-        files.forEach(file -> service.uploadProductImage(product.getId(), file));
-        return ResponseEntity.status(HttpStatus.CREATED).body(product);
+
+        Product product = service.addNewProduct(name, price, quantity, description, files);
+        if (product != null)
+            return ResponseEntity.status(HttpStatus.CREATED).body(product);
+        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 
@@ -71,8 +77,9 @@ public class ProductsController {
 
 
     @DeleteMapping("/{product_id}")
-    public void deleteProduct(@PathVariable long product_id) {
+    public ResponseEntity<Product> deleteProduct(@PathVariable long product_id) {
         service.deleteProductById(product_id);
+        return ResponseEntity.ok().build();
     }
 
 

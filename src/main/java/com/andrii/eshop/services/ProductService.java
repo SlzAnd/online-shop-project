@@ -2,30 +2,27 @@ package com.andrii.eshop.services;
 
 import com.andrii.eshop.models.Product;
 import com.andrii.eshop.repositories.ProductRepository;
-import com.andrii.eshop.s3.S3Buckets;
-import com.andrii.eshop.s3.S3Service;
+import com.andrii.eshop.utils.Util;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
+
 
 @Service
 public class ProductService {
 
     private final ProductRepository repository;
+    public final ProductImagesService imagesService;
 
-    private final S3Service s3Service;
-    private final S3Buckets s3Buckets;
+    private final Util util;
 
-    public ProductService(ProductRepository repository, S3Service s3Service, S3Buckets s3Buckets) {
+    public ProductService(ProductRepository repository, ProductImagesService imagesService, Util util) {
         this.repository = repository;
-        this.s3Service = s3Service;
-        this.s3Buckets = s3Buckets;
+        this.imagesService = imagesService;
+        this.util = util;
     }
 
     public List<Product> findAllProducts(int page, int size, String sort) {
@@ -35,10 +32,7 @@ public class ProductService {
     }
 
     public Product findProductById(long product_id) {
-        if(repository.findById(product_id).isPresent())
-            return repository.findById(product_id).get();
-//        else throw new RuntimeException("No product with this product_id");
-        else return new Product();
+        return util.getProduct(product_id);
     }
 
     public Product updateProductById(long product_id,
@@ -46,7 +40,7 @@ public class ProductService {
                                      Double price,
                                      Integer quantity,
                                      String description) {
-        Product product = getProduct(product_id);
+        Product product = util.getProduct(product_id);
         if (product != null) {
             if (name != null) {
                 product.setName(name);
@@ -69,39 +63,15 @@ public class ProductService {
         repository.deleteById(product_id);
     }
 
-    public void addNewProduct(Product product) {
+    public Product addNewProduct(String name, double price, int quantity, String description, List<MultipartFile> files) {
+        List<String> imageNames = files.stream()
+                .map(MultipartFile::getOriginalFilename)
+                .toList();
+        Product product = new Product(name, price, quantity, description, imageNames);
         repository.save(product);
-    }
-
-    public void uploadProductImage(long productId, MultipartFile file) {
-        Product currentProduct = getProduct(productId);
-        String productFolder = String.format("%s-%s", currentProduct.getName(), UUID.randomUUID());
-        String bucketName = s3Buckets.getProductImagesBucket();
-        String path = String.format("%s/%s", productFolder, file.getOriginalFilename()); //bucketName/productFolder/product images
-
-        try{
-            s3Service.uploadImage(bucketName, path, file.getBytes());
-            currentProduct.setImageFolder(productFolder);
-            repository.save(currentProduct);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        
-    }
-
-    public byte[] getProductImage(Long productId) {
-        Product currentProduct = getProduct(productId);
-        if(currentProduct != null)
-            return s3Service.downloadImage(s3Buckets.getProductImagesBucket(), currentProduct.getImageFolder());
-        else return new byte[0];
-    }
-
-    private Product getProduct(Long productId) {
-        Product product;
-        if(repository.findById(productId).isPresent())
-            product = repository.findById(productId).get();
-        else
-            return null;
+        files.forEach(file -> imagesService.uploadProductImage(product.getId(), file));
         return product;
     }
+
+
 }

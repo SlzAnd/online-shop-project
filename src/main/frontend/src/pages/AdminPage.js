@@ -1,12 +1,11 @@
 import ProductList from "../components/ProductList";
-import AddProductForm from "../components/AddProductForm";
-import MyButton from "../components/MyButton";
+import Header from "../components/Header";
 
 const AdminPage = () => {
     return (
         <div className="admin-page">
+            <Header/>
             <h1>All Products</h1>
-            <MyButton formComponent={AddProductForm}/>
             <ProductList/>
         </div>
     )

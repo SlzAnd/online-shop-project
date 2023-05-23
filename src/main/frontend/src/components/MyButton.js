@@ -14,7 +14,7 @@ function MyButton(props) {
 
     return (
         <div>
-            <button className={"link-btn"} onClick={handleClick}>Add new product</button>
+            <button className={"link-btn"} onClick={handleClick}>ADD PRODUCT</button>
             <div className={"modal"}>
                 <div className={"modal-content"}>
                     <Modal  isOpen={isModalOpen} onRequestClose={handleCloseModal}>

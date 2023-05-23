@@ -1,38 +1,51 @@
 package com.andrii.eshop.controllers;
 
-import com.andrii.eshop.services.ProductService;
+import com.andrii.eshop.models.Product;
+import com.andrii.eshop.services.ProductImagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/products")
 @CrossOrigin("*")
 public class ProductImagesController {
 
-    public final ProductService service;
+    public final ProductImagesService imagesService;
 
     @Autowired
-    public ProductImagesController(ProductService productService) {
-        this.service = productService;
+    public ProductImagesController(ProductImagesService imagesService) {
+        this.imagesService = imagesService;
     }
 
     @PostMapping(
             value = "/{productId}/product-image",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<?> uploadProductImage(@PathVariable long productId,
+    public ResponseEntity<?> addProductImage(@PathVariable long productId,
                                                 @RequestParam MultipartFile file) {
-
-        service.uploadProductImage(productId, file);
-        return ResponseEntity.ok().build();
+        Product product = imagesService.updateProductImage(productId, file);
+        if (product != null)
+            return ResponseEntity.ok(product);
+        else return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/{productId}/product-image")
-    public byte[] getProductImage(@PathVariable long productId) {
+    public ResponseEntity<List<String>> getProductImage(@PathVariable long productId) {
+        List<String> images = imagesService.getAllProductImageUrls(productId);
+        if (images == null)
+            return ResponseEntity.notFound().build();
+        else
+            return ResponseEntity.ok().body(images);
+    }
 
-        return service.getProductImage(productId);
+    @DeleteMapping("/{productId}/product-image")
+    public ResponseEntity<?> deleteProductImage(@PathVariable long productId,@RequestParam String imageName) {
+        imagesService.deleteProductImage(productId, imageName);
+        return ResponseEntity.ok().build();
     }
 }

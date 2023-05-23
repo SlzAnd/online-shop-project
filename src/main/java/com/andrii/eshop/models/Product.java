@@ -2,6 +2,8 @@ package com.andrii.eshop.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.*;
 
 @Entity(name = "Product")
@@ -58,19 +60,21 @@ public class Product {
     )
     private String description;
 
-    @Column(name = "imageKey")
-    private String imageFolder = this.name;
+    @ElementCollection
+    @CollectionTable(name = "product_images", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "image")
+    private List<String> image;
 
 
     public Product() {
     }
 
-    public Product(String name, double price, int quantity, String description) {
+    public Product(String name, double price, int quantity, String description, List<String> image) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.description = description;
-//        this.imageKey = name;
+        this.image = image;
     }
 
     public Long getId() {
@@ -93,10 +97,6 @@ public class Product {
         return description;
     }
 
-    public String getImageFolder() {
-        return imageFolder;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -113,8 +113,13 @@ public class Product {
         this.description = description;
     }
 
-    public void setImageFolder(String imageFolder) {
-        this.imageFolder = imageFolder;
+
+    public List<String> getImage() {
+        return image;
+    }
+
+    public void setImage(List<String> images) {
+        this.image = images;
     }
 
     @Override
@@ -125,7 +130,7 @@ public class Product {
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", description='" + description + '\'' +
-                ", imageKey='" + imageFolder + '\'' +
+                ", image=" + image +
                 '}';
     }
 }
