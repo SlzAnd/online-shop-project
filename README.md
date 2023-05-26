@@ -29,17 +29,27 @@ The Online Shop project is - currently in progress, with some backend functional
 #### Create product:
 <img src="imgs/Add-new-product.png">
 
+-------------------------------------------------
+
 #### Read product by id:
 <img src="imgs/Get-product-by-id.png">
+
+-------------------------------------------------
 
 #### Read all products:
 <img src="imgs/Get-all-products.png">
 
+-------------------------------------------------
+
 #### Update product:
 <img src="imgs/update-product.png">
 
+-------------------------------------------------
+
 #### Delete product:
 <img src="imgs/Delete-product-by-id.png">
+
+-------------------------------------------------
 
 --------------------------------------------------------------
 ### Additional operations with product images
@@ -47,19 +57,29 @@ The Online Shop project is - currently in progress, with some backend functional
 #### Add image for existing product:
 <img src="imgs/add-image-for-existing-product.png">
 
+-------------------------------------------------
+
 #### Get all images for product:
 <img src="imgs/get_images-by-product.png">
 
+-------------------------------------------------
+
 #### Delete image:
 <img src="imgs/delete-product-image.png">
+
+-------------------------------------------------
 
 
 The integration with AWS S3 for image storage and retrieval is also in place, ensuring efficient image management within the online shop.
 #### Each product has his own folder where stored images for this product:
 <img src="imgs/s3-folders.png">
 
+-------------------------------------------------
+
 #### Where stored images for this product:
 <img src="imgs/s3-images.png">
+
+-------------------------------------------------
 
 React has been used for specific functionality, enhancing the user experience while primarily emphasizing my Java and Spring expertise.
 UI will be realized in the future!
