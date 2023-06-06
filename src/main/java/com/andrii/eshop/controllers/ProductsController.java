@@ -31,10 +31,11 @@ public class ProductsController {
     @GetMapping
     public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "10") int size,
-                                        @RequestParam(defaultValue = "id") String sort
+                                        @RequestParam(defaultValue = "id") String sort,
+                                        @RequestParam(name = "search", required = false) String searchQuery
 //                                        @RequestParam(defaultValue = "ascending") String order // TODO: implement later -> changing order
     ) {
-        return service.findAllProducts(page, size, sort);
+        return service.findAllProducts(page, size, sort, searchQuery);
     }
 
 
@@ -63,13 +64,16 @@ public class ProductsController {
     }
 
 
-    @PutMapping("/{product_id}")
+    @PutMapping(value = "/{product_id}",
+    consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     public ResponseEntity<Object> updateProduct(@PathVariable int product_id,
                                                  @RequestParam(required = false) String name,
                                                  @RequestParam(required = false) Double price,
                                                  @RequestParam(required = false) Integer quantity,
-                                                 @RequestParam(required = false) String description) {
-        Product product = service.updateProductById(product_id, name, price, quantity, description);
+                                                 @RequestParam(required = false) String description,
+                                                 @RequestParam(required = false) List<MultipartFile> files) {
+        Product product = service.updateProductById(product_id, name, price, quantity, description, files);
         if (product != null)
             return ResponseEntity.ok(product);
         else return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product with id=" + product_id + " wasn't found");
