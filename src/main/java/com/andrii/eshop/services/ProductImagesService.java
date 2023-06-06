@@ -29,52 +29,58 @@ public class ProductImagesService {
         this.util = util;
     }
 
-    public void uploadProductImage(long productId, MultipartFile file) {
-        uploadFileToBucket(productId, file);
+    public String uploadProductImage(String productName, MultipartFile file) {
+        return uploadFileToBucket(productName, file);
     }
 
-    public Product updateProductImage(long productId, MultipartFile file) {
-            Product currentProduct = uploadFileToBucket(productId, file);
-            if( currentProduct != null) {
-                List<String> imageNames = currentProduct.getImage();
-                imageNames.add(file.getOriginalFilename());
-                currentProduct.setImage(imageNames);
-                repository.save(currentProduct);
-                return currentProduct;
-            } else
-                return null;
+    public String updateProductImage(String productName, MultipartFile file) {
+        return uploadFileToBucket(productName, file);
     }
 
     public List<String> getAllProductImageUrls(Long productId) {
         Product currentProduct = util.getProduct(productId);
         if(currentProduct != null)
-            return s3Service.downloadAllUrlsFromBucketFolder(s3Buckets.getProductImagesBucketName(), currentProduct.getName());
+            return s3Service.downloadAllUrlsFromBucketFolder(s3Buckets.getProductImagesBucketName(),
+                    currentProduct.getName());
         else return null;
     }
 
-    public void deleteProductImage(long productId, String imageName) { //TODO: Maybe change image name parameter to number or something simpler
+    public void deleteProductImage(long productId, String imageName) {
         Product currentProduct = util.getProduct(productId);
-        List<String> imageNames = currentProduct.getImage();
+
+        List<String> imageNames = currentProduct.getImageNames();
         imageNames.remove(imageName);
-        currentProduct.setImage(imageNames);
+        currentProduct.setImageNames(imageNames);
+
+        List<String> imageUrls = currentProduct.getImage();
+        String imageNameWithoutSpaces = imageName.replaceAll(" ", "%20");
+        System.out.println("ImageNameWith%20: " + imageNameWithoutSpaces);
+        imageUrls.removeIf(url -> url.endsWith(imageNameWithoutSpaces));
+        System.out.println(imageUrls);
+        currentProduct.setImage(imageUrls);
+
         repository.save(currentProduct);
         s3Service.deleteFileFromBucket(s3Buckets.getProductImagesBucketName(), currentProduct.getName(), imageName);
     }
 
-    private Product uploadFileToBucket(long productId, MultipartFile file) {
+    public void deleteProductFolder(long productId) {
         Product currentProduct = util.getProduct(productId);
+        s3Service.deleteFolderFromBucket(s3Buckets.getProductImagesBucketName(), currentProduct.getName());
+    }
 
-        if (currentProduct != null) {
-            String fileName = file.getOriginalFilename();
-            String productFolder = currentProduct.getName();
-            String bucketName = s3Buckets.getProductImagesBucketName();
-            String path = String.format("%s/%s", productFolder, fileName); //bucketName/productFolder/product images
-            try {
-                s3Service.uploadFileToBucket(bucketName, path, file.getBytes());
-                return currentProduct;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }else return null;
+    public void replaceImagesToAnotherFolder(String currentFolder, String destinationFolder) {
+        s3Service.replaceFilesToAnotherFolder(currentFolder, destinationFolder, s3Buckets.getProductImagesBucketName());
+    }
+
+    private String uploadFileToBucket(String productName, MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        String bucketName = s3Buckets.getProductImagesBucketName();
+        String path = String.format("%s/%s", productName, fileName); //bucketName/productFolder/product images
+
+        try {
+            return s3Service.uploadFileToBucket(bucketName, path, file.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class S3Service {
@@ -20,13 +21,49 @@ public class S3Service {
         this.s3Client = s3Client;
     }
 
-    public void uploadFileToBucket(String bucketName, String key, byte[] file) {
+    public String uploadFileToBucket(String bucketName, String path, byte[] file) {
         PutObjectRequest objectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
-                .key(key)
+                .key(path)
                 .build();
 
+
         s3Client.putObject(objectRequest, RequestBody.fromBytes(file));
+
+        return s3Client.utilities().getUrl(GetUrlRequest.builder()
+                .bucket(bucketName)
+                .key(path)
+                .build()).toString();
+    }
+
+    public void replaceFilesToAnotherFolder(String currentFolder, String destinationFolder, String bucketName) {
+        try {
+            ListObjectsV2Request listRequest = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .prefix(currentFolder + "/")
+                    .build();
+            ListObjectsV2Response listResponse = s3Client.listObjectsV2(listRequest);
+            List<S3Object> objects = listResponse.contents();
+
+            for (S3Object object : objects) {
+                String sourceKey = object.key();
+                String destinationKey = sourceKey.replace(currentFolder, destinationFolder);
+
+                CopyObjectRequest copyRequest = CopyObjectRequest.builder()
+                        .sourceBucket(bucketName)
+                        .sourceKey(sourceKey)
+                        .destinationBucket(bucketName)
+                        .destinationKey(destinationKey)
+                        .build();
+
+                s3Client.copyObject(copyRequest);
+            }
+
+            deleteFolderFromBucket(bucketName, currentFolder);
+
+        } catch (S3Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public byte[] downloadFileFromBucket(String bucketName, String key) {
@@ -43,10 +80,7 @@ public class S3Service {
         }
     }
 
-    public List<String> downloadAllUrlsFromBucketFolder(String bucketName, String key) {
-        // Можливо можна використати список імен зображень які ми зберігаємо в БД,
-        // щоб не робити зайві запити а просто проходити по списку та повертати посилання на зображення.
-        // Але якщо ми будемо змінювати ці імена на щось простіше(номера тощо) тоді залишити цю імплементацію!
+    public List<String> downloadAllUrlsFromBucketFolder(String bucketName, String folderName) {
         List<String> imageURLs = new ArrayList<>();
         try {
             ListObjectsRequest listRequest = ListObjectsRequest
@@ -58,7 +92,7 @@ public class S3Service {
             List<S3Object> objects = response.contents();
 
             for (S3Object object : objects) {
-                if (object.key().startsWith(key)) {
+                if (object.key().startsWith(folderName)) {
                     GetUrlRequest request = GetUrlRequest.builder()
                             .bucket(bucketName)
                             .key(object.key())
@@ -77,9 +111,33 @@ public class S3Service {
     public void deleteFileFromBucket(String bucketName, String folderName, String fileName) {
         DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                         .bucket(bucketName)
-                                .key(folderName+"/"+fileName)
-                                        .build();
+                        .key(folderName+"/"+fileName)
+                        .build();
         DeleteObjectResponse response = s3Client.deleteObject(deleteObjectRequest);
         System.out.println(response);
+    }
+
+    public void deleteFolderFromBucket(String bucketName, String folderName) {
+        try {
+            ListObjectsV2Request listObjectsRequest = ListObjectsV2Request.builder().bucket(bucketName).prefix(folderName).build();
+            ListObjectsV2Response listObjectsResponse = s3Client.listObjectsV2(listObjectsRequest);
+            List<S3Object> objectsToDelete = listObjectsResponse.contents();
+            if (!objectsToDelete.isEmpty()) {
+                DeleteObjectsRequest deleteObjectsRequest = DeleteObjectsRequest.builder()
+                        .bucket(bucketName)
+                        .delete(Delete.builder()
+                                .objects(objectsToDelete.stream()
+                                    .map(s3Object -> ObjectIdentifier.builder().key(s3Object.key()).build())
+                                    .collect(Collectors.toList()))
+                                .build()
+                        )
+                        .build();
+                DeleteObjectsResponse deleteObjectsResponse = s3Client.deleteObjects(deleteObjectsRequest);
+                System.out.println("Deleted objects:");
+                deleteObjectsResponse.deleted().forEach(System.out::println);
+            }
+        } catch (S3Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

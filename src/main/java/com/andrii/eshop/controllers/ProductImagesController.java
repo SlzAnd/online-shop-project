@@ -22,20 +22,20 @@ public class ProductImagesController {
         this.imagesService = imagesService;
     }
 
-    @PostMapping(
-            value = "/{productId}/product-image",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
-    public ResponseEntity<?> addProductImage(@PathVariable long productId,
-                                                @RequestParam MultipartFile file) {
-        Product product = imagesService.updateProductImage(productId, file);
-        if (product != null)
-            return ResponseEntity.ok(product);
-        else return ResponseEntity.badRequest().build();
-    }
+//    @PostMapping(
+//            value = "/{productId}/product-image",
+//            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+//    )
+//    public ResponseEntity<?> addProductImage(@PathVariable long productId,
+//                                                @RequestParam MultipartFile file) {
+////        Product product = imagesService.updateProductImage(productId, file);
+////        if (product != null)
+////            return ResponseEntity.ok(product);
+////        else return ResponseEntity.badRequest().build();
+//    }
 
     @GetMapping("/{productId}/product-image")
-    public ResponseEntity<List<String>> getProductImage(@PathVariable long productId) {
+    public ResponseEntity<List<String>> getProductImages(@PathVariable long productId) {
         List<String> images = imagesService.getAllProductImageUrls(productId);
         if (images == null)
             return ResponseEntity.notFound().build();
