@@ -65,16 +65,22 @@ public class Product {
     @Column(name = "image")
     private List<String> image;
 
+    @ElementCollection
+    @CollectionTable(name = "product_image_names", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "imageName")
+    private List<String> imageNames;
+
 
     public Product() {
     }
 
-    public Product(String name, double price, int quantity, String description, List<String> image) {
+    public Product(String name, double price, int quantity, String description, List<String> image, List<String> imageNames) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.description = description;
         this.image = image;
+        this.imageNames = imageNames;
     }
 
     public Long getId() {
@@ -132,5 +138,13 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", image=" + image +
                 '}';
+    }
+
+    public List<String> getImageNames() {
+        return imageNames;
+    }
+
+    public void setImageNames(List<String> imageNames) {
+        this.imageNames = imageNames;
     }
 }
