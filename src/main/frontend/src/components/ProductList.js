@@ -52,9 +52,9 @@ const ProductList = ({productList, updateProducts}) => {
                             <td>{product.description.substr(0,30)} {product.description.length > 30 ? '...' : ''}</td>
                             <td>
                                 <div className="btn-group">
-                                    <button type="button" className="btn btn-outline-info mb-0" onClick={() => handleOpenProduct(product.id)}>View</button>
-                                    <button type="button" className="btn btn-outline-warning mb-0" onClick={() => handleEditProduct(product)} >Edit</button>
-                                    <button type="button" className="btn btn-outline-danger mb-0" onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                                    <button type="button" className="btn btn-outline-info fixed-width-button mb-0" onClick={() => handleOpenProduct(product.id)}>View</button>
+                                    <button type="button" className="btn btn-outline-warning fixed-width-button mb-0" onClick={() => handleEditProduct(product)} >Edit</button>
+                                    <button type="button" className="btn btn-outline-danger fixed-width-button mb-0" onClick={() => handleDeleteProduct(product.id)}>Delete</button>
                                 </div>
                             </td>
                         </tr>

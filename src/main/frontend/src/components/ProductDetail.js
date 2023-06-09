@@ -3,6 +3,7 @@ import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+import '../App.css'
 
 
 
@@ -27,12 +28,12 @@ const ProductDetail = ({ productId, onClose }) => {
             </Modal.Header>
             <Modal.Body>
                 {product ? (
-                    <div className="card w-100">
+                    <div className="card w-100 card-bg">
                         <div className="card-header">
                             <h5 className="card-title">{product.name}</h5>
                             <div className="text-body-secondary">product code</div>
                         </div>
-                        <div id="carousel" className="carousel slide">
+                        <div id="carousel" className="carousel slide mt-2">
                             <div className="carousel-inner">
                                     {product.image.map((img, index) => {
                                         return (

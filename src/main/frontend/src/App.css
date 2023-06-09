@@ -281,3 +281,17 @@ input {
 .delete-confirmation button {
   margin: 5px;
 }
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.card-bg {
+  background-color: olive;
+}
+
+.fixed-width-button {
+  width: 70px;
+}

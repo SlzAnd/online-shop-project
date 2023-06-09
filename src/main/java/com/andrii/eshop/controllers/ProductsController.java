@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +29,9 @@ public class ProductsController {
     }
 
 
+
     @GetMapping
+    @PreAuthorize("hasAuthority('product:read')")
     public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "10") int size,
                                         @RequestParam(defaultValue = "id") String sort,
@@ -40,6 +43,7 @@ public class ProductsController {
 
 
     @GetMapping("/{product_id}")
+    @PreAuthorize("hasAuthority('product:read')")
     public ResponseEntity<Product> getProduct(@PathVariable int product_id) {
         Product product = service.findProductById(product_id);
         if (product != null)
@@ -51,6 +55,7 @@ public class ProductsController {
     @PostMapping(value = "/add-product",
     consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
+    @PreAuthorize("hasAuthority('product:create')")
     public ResponseEntity<Product> addNewProduct(@RequestParam String name,
                                         @RequestParam double price,
                                         @RequestParam int quantity,
@@ -67,6 +72,7 @@ public class ProductsController {
     @PutMapping(value = "/{product_id}",
     consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
+    @PreAuthorize("hasAuthority('product:update')")
     public ResponseEntity<Object> updateProduct(@PathVariable int product_id,
                                                  @RequestParam(required = false) String name,
                                                  @RequestParam(required = false) Double price,
@@ -81,12 +87,9 @@ public class ProductsController {
 
 
     @DeleteMapping("/{product_id}")
+    @PreAuthorize("hasAuthority('product:delete')")
     public ResponseEntity<Product> deleteProduct(@PathVariable long product_id) {
         service.deleteProductById(product_id);
         return ResponseEntity.ok().build();
     }
-
-
-
-
 }
