@@ -1,0 +1,48 @@
+.access-error-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.ae-container {
+    text-align: center;
+}
+
+.ae-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.ae-message {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.ae-illustration-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.ae-illustration {
+    width: 100%;
+    height: auto;
+}
+
+.ae-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.ae-btn:hover {
+    background-color: #0056b3;
+}

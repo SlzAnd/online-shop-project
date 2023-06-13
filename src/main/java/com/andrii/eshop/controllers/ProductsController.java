@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/products")
-@CrossOrigin("*")
 public class ProductsController {
 
     public final ProductService service;
@@ -31,7 +30,7 @@ public class ProductsController {
 
 
     @GetMapping
-    @PreAuthorize("hasAuthority('product:read')")
+//    @PreAuthorize("hasAuthority('product:read')")
     public List<Product> getAllProducts(@RequestParam(defaultValue = "0") int page,
                                         @RequestParam(defaultValue = "10") int size,
                                         @RequestParam(defaultValue = "id") String sort,
@@ -43,7 +42,7 @@ public class ProductsController {
 
 
     @GetMapping("/{product_id}")
-    @PreAuthorize("hasAuthority('product:read')")
+//    @PreAuthorize("hasAuthority('product:read')")
     public ResponseEntity<Product> getProduct(@PathVariable int product_id) {
         Product product = service.findProductById(product_id);
         if (product != null)

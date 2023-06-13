@@ -4,6 +4,7 @@ import com.andrii.eshop.auth.AuthenticationRequest;
 import com.andrii.eshop.auth.AuthenticationResponse;
 import com.andrii.eshop.auth.RegisterRequest;
 import com.andrii.eshop.config.JwtService;
+import com.andrii.eshop.models.Role;
 import com.andrii.eshop.models.User;
 import com.andrii.eshop.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,20 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse registerUser(RegisterRequest request) {
+        return register(request, Role.USER);
+    }
+    public AuthenticationResponse registerAdmin(RegisterRequest request) {
+        return register(request, Role.ADMIN);
+    }
+
+    private AuthenticationResponse register(RegisterRequest request, Role role) {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
+                .role(role)
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -51,6 +59,7 @@ public class AuthenticationService {
         return AuthenticationResponse
                 .builder()
                 .token(jwtToken)
+                .role(user.getRole().name())
                 .build();
     }
 }

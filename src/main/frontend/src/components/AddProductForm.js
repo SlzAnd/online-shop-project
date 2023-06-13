@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Dropzone from 'react-dropzone';
-import axios from 'axios';
+import axiosInstance from "../utils/axiosConfig";
 import { isNumeric } from 'validator';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -84,8 +84,8 @@ const AddProductForm = ({updateProducts}) => {
 
         try {
             console.log(formData.getAll("files"))
-            const response = await axios.post(
-                'http://localhost:8080/api/products/add-product',
+            const response = await axiosInstance.post(
+                '/products/add-product',
                 formData,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' },

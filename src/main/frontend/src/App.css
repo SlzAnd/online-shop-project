@@ -295,3 +295,7 @@ input {
 .fixed-width-button {
   width: 70px;
 }
+
+.navbar-custom {
+  height: 100px;
+}

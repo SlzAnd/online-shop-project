@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosConfig";
 import { Modal, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
@@ -12,7 +12,7 @@ const ProductDetail = ({ productId, onClose }) => {
 
     useEffect(() => {
         // Fetch product details using the productId
-        axios.get(`http://localhost:8080/api/products/${productId}`)
+        axiosInstance.get(`/products/${productId}`)
             .then((response) => {
                 setProduct(response.data);
             })

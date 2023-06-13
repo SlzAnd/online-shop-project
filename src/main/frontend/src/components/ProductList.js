@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosConfig";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button, Modal} from "react-bootstrap";
 import ProductDetail from "./ProductDetail";
@@ -9,6 +9,8 @@ const ProductList = ({productList, updateProducts}) => {
 
     const [selectedEditProduct, setSelectedEditProduct] = useState(null);
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const [searchInput, setSearchInput] = useState('');
+
 
     const handleOpenProduct = (productId) => {
         setSelectedProductId(productId);
@@ -21,7 +23,7 @@ const ProductList = ({productList, updateProducts}) => {
 
     const handleDeleteProduct = async (productId) => {
         try {
-            await axios.delete(`http://localhost:8080/api/products/${productId}`);
+            await axiosInstance.delete(`/products/${productId}`);
             console.log("Product was successfully deleted!")
             updateProducts();
         } catch (error) {
@@ -29,19 +31,33 @@ const ProductList = ({productList, updateProducts}) => {
         }
     }
 
+    const handleSearchSubmit = async (event) => {
+        event.preventDefault();
+        updateProducts(searchInput);
+    };
+
     return (
-        <table className="table table-bordered table-hover">
-            <thead className="thead-dark">
-            <tr>
-                <th scope="col">№</th>
-                <th scope="col">Product Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Description</th>
-                <th scope="col">Operations</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div>
+            <div className="d-flex align-items-center justify-content-center mb-2">
+                <form className="d-flex align-items-center justify-content-center mb-2" role="search" onSubmit={handleSearchSubmit}>
+                    <input className="form-control me-2" type="search" placeholder="Search..."
+                           aria-label="Search" value={searchInput}
+                           onChange={(e) => setSearchInput(e.target.value)}/>
+                    <button className="btn btn-secondary mb-0" type="submit">Search</button>
+                </form>
+            </div>
+            <table className="table table-bordered table-hover">
+                <thead className="thead-dark">
+                <tr>
+                    <th scope="col">№</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Operations</th>
+                </tr>
+                </thead>
+                <tbody>
                 {productList.map((product, index) => {
                     return (
                         <tr key={index}>
@@ -60,32 +76,33 @@ const ProductList = ({productList, updateProducts}) => {
                         </tr>
                     )
                 })}
-            </tbody>
-            {selectedProductId && (
-                <ProductDetail
-                    productId={selectedProductId}
-                    onClose={() => setSelectedProductId(null)}
-                />
-            )}
-            {selectedEditProduct && (
-                <Modal show={true} onHide={() => setSelectedEditProduct(null)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Edit Product</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <EditProductForm
-                            updateProducts={updateProducts}
-                            productForUpdate={selectedEditProduct}
-                        />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setSelectedEditProduct(null)}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-            )}
-        </table>
+                </tbody>
+                {selectedProductId && (
+                    <ProductDetail
+                        productId={selectedProductId}
+                        onClose={() => setSelectedProductId(null)}
+                    />
+                )}
+                {selectedEditProduct && (
+                    <Modal show={true} onHide={() => setSelectedEditProduct(null)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edit Product</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <EditProductForm
+                                updateProducts={updateProducts}
+                                productForUpdate={selectedEditProduct}
+                            />
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setSelectedEditProduct(null)}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                )}
+            </table>
+        </div>
     );
 };
 

@@ -15,7 +15,8 @@ public enum Role {
 
     USER(
         Set.of(
-            PRODUCT_READ
+            PRODUCT_READ,
+                USER_READ
         )
     ),
     ADMIN(
@@ -23,7 +24,11 @@ public enum Role {
             PRODUCT_CREATE,
             PRODUCT_READ,
             PRODUCT_UPDATE,
-            PRODUCT_DELETE
+            PRODUCT_DELETE,
+                USER_READ,
+                USER_CREATE,
+                USER_UPDATE,
+                USER_DELETE
         )
     );
 

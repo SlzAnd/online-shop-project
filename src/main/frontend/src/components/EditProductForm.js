@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Dropzone from 'react-dropzone';
-import axios from 'axios';
+import axiosInstance from "../utils/axiosConfig";
 import { v4 as uuid } from 'uuid';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -93,8 +93,8 @@ const EditProductForm = ({updateProducts, productForUpdate}) => {
 
         try {
             console.log(formData.getAll("files"))
-            const response = await axios.put(
-                `http://localhost:8080/api/products/${productForUpdate.id}`,
+            const response = await axiosInstance.put(
+                `/products/${productForUpdate.id}`,
                 formData,
                 {
                     headers: { 'Content-Type': 'multipart/form-data' },
@@ -141,7 +141,7 @@ const EditProductForm = ({updateProducts, productForUpdate}) => {
     const handleConfirmDelete = async (event, imageForDelete) => {
         event.preventDefault();
         try {
-            await axios.delete(`http://localhost:8080/api/products/${productForUpdate.id}/product-image?imageName=${imageForDelete}`);
+            await axiosInstance.delete(`/products/${productForUpdate.id}/product-image?imageName=${imageForDelete}`);
             const updatedImages = [...currentProduct.images];
             const updatedImagePreviews = imagePreviews.filter((preview) => preview.name !== imageForDelete); // Remove the image preview with the specified id
             const updatedImageNames = updatedImagesNames.filter((imgName) => imgName.name !== imageForDelete);

@@ -6,10 +6,8 @@ import com.andrii.eshop.auth.RegisterRequest;
 import com.andrii.eshop.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,7 +20,15 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register (
             @RequestBody RegisterRequest request
      ) {
-        return ResponseEntity.ok(service.register(request));
+        return ResponseEntity.ok(service.registerUser(request));
+    }
+
+    @PostMapping("/register-admin")
+    @PreAuthorize("hasAuthority('user:create')")
+    public ResponseEntity<AuthenticationResponse> registerAdmin (
+            @RequestBody RegisterRequest request
+     ) {
+        return ResponseEntity.ok(service.registerAdmin(request));
     }
 
     @PostMapping("/authenticate")
@@ -31,6 +37,5 @@ public class AuthenticationController {
      ) {
         return ResponseEntity.ok(service.authenticate(request));
     }
-
 
 }
