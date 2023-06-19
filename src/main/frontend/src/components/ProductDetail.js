@@ -28,7 +28,7 @@ const ProductDetail = ({ productId, onClose }) => {
             </Modal.Header>
             <Modal.Body>
                 {product ? (
-                    <div className="card w-100 card-bg">
+                    <div className="card w-100 card-bg" style={{ backgroundColor: '#D4D4D4' }}>
                         <div className="card-header">
                             <h5 className="card-title">{product.name}</h5>
                             <div className="text-body-secondary">product code</div>

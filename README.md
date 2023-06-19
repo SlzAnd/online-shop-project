@@ -5,7 +5,10 @@
 # Online Shop - Java Spring Boot Project
 
 Welcome to the Online Shop project! This e-commerce web application showcases my skills in Java and the Spring framework. The project utilizes Java Spring Boot as the backend framework and integrates with AWS S3 for secure storage, retrieval, and deletion of product images.
-
+## Last update:
+I'm excited to share the latest updates in my app for small businesses. The project has undergone significant improvements, for example, we created first prototype of UI for Administration Portal (you can see screenshots below) and also, now all the examples featured in the app are real business owned by my friends. So don't worry, even if you don't want to hire me as a developer in your company, you can still enjoy something truly delicious when you make a purchase through this shop. So, if you're craving mouthwatering gingerbreads or other delightful treats, follow the link: https://www.instagram.com/naretin_pryanik/
+and indulge yourself in a tasty shopping experience while supporting small businesses.
+In my opinion, it's a win-win situation, where you get to satisfy your taste buds and help entrepreneurs thrive!
 ## About Me
 I am a passionate developer with expertise in Java and a strong focus on backend development. With a solid understanding of the Spring framework, I have built this Online Shop project to demonstrate my proficiency in creating robust and scalable web applications.
 
@@ -24,50 +27,63 @@ While primarily focusing on Java and Spring, I have selectively utilized React f
 
 ## Project Status and Progress
 The Online Shop project is - currently in progress, with some backend functionalities already implemented. Firstly, I decided to focus on the admin page. For example, was created main endpoints for manipulations with products(CRUD).
+## Administration portal. 
+### Enter page / Login page / Admin Page
+
+#### Enter Page:
+<img src="imgs/Enter-page.png">
+-------------------------------------------------
+
+#### Login Page:
+<img src="imgs/Login-page.png">
+-------------------------------------------------
+
+#### Enter Page after log-in:
+<img src="imgs/Enter-page-after-login.png">
+-------------------------------------------------
+
+#### Admin Page(products):
+<img src="imgs/Admin-page.png">
+-------------------------------------------------
+If you try to get access to the admin portal like a user...
+<img src="imgs/Login-USER-role.png">
+You'll see this error:
+<img src="imgs/Access-denied-error.png">
+
 ### Main operations with products:
 
 #### Create product:
-<img src="imgs/Add-new-product.png">
+<img src="imgs/Create-product-1.png">
+<img src="imgs/Create-product-2.png">
 
 -------------------------------------------------
 
-#### Read product by id:
-<img src="imgs/Get-product-by-id.png">
-
--------------------------------------------------
-
-#### Read all products:
-<img src="imgs/Get-all-products.png">
+#### View product:
+<img src="imgs/View-product-1.png">
+<img src="imgs/View-product-2.png">
 
 -------------------------------------------------
 
 #### Update product:
-<img src="imgs/update-product.png">
+<img src="imgs/Edit-product-1.png">
+<img src="imgs/Edit-product-2.png">
+Admin can see all images in this window and can delete images when clicking on the "trash" icon.
+<img src="imgs/Edit-product-3.png">
+At the end of updating the product, you should press the "Update Product" button.
+<img src="imgs/Edit-product-4.png">
 
 -------------------------------------------------
 
 #### Delete product:
-<img src="imgs/Delete-product-by-id.png">
+<img src="imgs/Delete-product-1.png">
+<img src="imgs/Delete-product-2.png">
 
 -------------------------------------------------
+
+#### Search products:
+<img src="imgs/Search-products.png">
 
 --------------------------------------------------------------
-### Additional operations with product images
-
-#### Add image for existing product:
-<img src="imgs/add-image-for-existing-product.png">
-
--------------------------------------------------
-
-#### Get all images for product:
-<img src="imgs/get_images-by-product.png">
-
--------------------------------------------------
-
-#### Delete image:
-<img src="imgs/delete-product-image.png">
-
--------------------------------------------------
 
 
 The integration with AWS S3 for image storage and retrieval is also in place, ensuring efficient image management within the online shop.

@@ -1,5 +1,6 @@
-package com.andrii.eshop.models;
+package com.andrii.eshop.models.auth;
 
+import com.andrii.eshop.models.auth.Permission;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.andrii.eshop.models.Permission.*;
+import static com.andrii.eshop.models.auth.Permission.*;
 
 @RequiredArgsConstructor
 public enum Role {

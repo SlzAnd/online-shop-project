@@ -1,5 +1,6 @@
 package com.andrii.eshop.models;
 
+import com.andrii.eshop.models.auth.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class User implements UserDetails {
     private String lastName;
 
     private String email;
+    private String phoneNumber;
 
     private String password;
 

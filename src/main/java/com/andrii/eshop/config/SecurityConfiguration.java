@@ -39,6 +39,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**")    // all these endpoints doesn't need any token
                     .permitAll()
+                .requestMatchers("api/orders/**")
+                    .permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/products/**")
                     .permitAll()
                 .anyRequest()   // any other request must be authenticated

@@ -4,7 +4,7 @@ import com.andrii.eshop.auth.AuthenticationRequest;
 import com.andrii.eshop.auth.AuthenticationResponse;
 import com.andrii.eshop.auth.RegisterRequest;
 import com.andrii.eshop.config.JwtService;
-import com.andrii.eshop.models.Role;
+import com.andrii.eshop.models.auth.Role;
 import com.andrii.eshop.models.User;
 import com.andrii.eshop.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

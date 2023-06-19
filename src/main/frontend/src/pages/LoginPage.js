@@ -27,6 +27,7 @@ const LoginPage = () => {
                     const userRole = response.data.role;
                     localStorage.setItem("token", response.data.token);
                     localStorage.setItem("role", userRole);
+                    console.log(userRole)
                     userRole === "ADMIN"
                     ? navigate('/admin')
                     : navigate('/accessErr');
@@ -55,8 +56,8 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="container mt-4 d-flex flex-column align-items-center">
-            <h2>Login</h2>
+        <div className="container d-flex flex-column align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+            <h2 className="mb-4">Login</h2>
             <form onSubmit={handleLogin} noValidate>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">

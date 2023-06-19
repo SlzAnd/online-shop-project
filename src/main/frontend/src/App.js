@@ -20,7 +20,7 @@ const App = () => {
                     <Route exact path="/" element={<EntryPage/>} />
                     <Route path="/register" element={<RegisterPage/>} />
                     <Route path="/login" element={<LoginPage/>} />
-                    <Route path="/admin" element={userRole === "ADMIN" ? <AdminPage/> : <EntryPage/>} />
+                    <Route path="/admin" element={<AdminPage/>} />
                     <Route path="*" element={<div>404 Not Found</div>} />
                     <Route path="/accessErr" element={<AccessErrorPage/>} />
                 </Routes>

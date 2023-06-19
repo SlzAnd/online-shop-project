@@ -1,4 +1,4 @@
-package com.andrii.eshop.models;
+package com.andrii.eshop.models.auth;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

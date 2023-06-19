@@ -168,7 +168,7 @@ const AddProductForm = ({updateProducts}) => {
                         />
                     ))}
                 </div>
-                <button type="submit" className="btn btn-outline-warning">Create Product</button>
+                <button type="submit" className="btn btn-outline-warning mt-3">Create Product</button>
             </form>
         </div>
     );
