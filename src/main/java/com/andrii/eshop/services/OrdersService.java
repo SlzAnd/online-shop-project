@@ -41,26 +41,15 @@ public class OrdersService {
         List<Order> orders = orderRepository.findAll();
         List<OrderResponse> orderResponses = new ArrayList<>();
         for(Order order : orders) {
-            List<OrderResponse.Item> items = order.getItems().stream()
-                    .map(orderItem -> new OrderResponse.Item(orderItem.getProduct().getId(),
-                            orderItem.getProduct().getName(),
-                            orderItem.getProduct().getPrice(),
-                            orderItem.getQuantity()
-                    )).toList();
+            List<OrderResponse.Item> items = createOrderItemsForResponse(order);
 
-
-            OrderResponse orderResponse = OrderResponse.builder()
-                    .id(order.getId())
-                    .totalPrice(order.getPrice())
-                    .created(order.getCreated().format(dateTimeFormatter))
-                    .userInfo(order.getCustomer())
-                    .shipInfo(order.getShipInfo())
-                    .orderItems(items)
-                    .build();
+            OrderResponse orderResponse = createOrderResponse(order, items);
             orderResponses.add(orderResponse);
         }
         return orderResponses;
     }
+
+
 
     public OrderResponse createOrder(OrderRequest orderRequest) {
 
@@ -113,14 +102,22 @@ public class OrdersService {
         // store order object in the DB
         orderRepository.save(order);
 
-        List<OrderResponse.Item> items = order.getItems().stream()
+        List<OrderResponse.Item> items = createOrderItemsForResponse(order);
+
+        return createOrderResponse(order, items);
+    }
+
+    private List<OrderResponse.Item> createOrderItemsForResponse(Order order) {
+        return order.getItems().stream()
                 .map(orderItem -> new OrderResponse.Item(orderItem.getProduct().getId(),
                         orderItem.getProduct().getName(),
                         orderItem.getProduct().getPrice(),
                         orderItem.getQuantity()
-                        )).toList();
+                )).toList();
+    }
 
-        OrderResponse orderResponse = OrderResponse.builder()
+    private OrderResponse createOrderResponse(Order order, List<OrderResponse.Item> items) {
+        return OrderResponse.builder()
                 .id(order.getId())
                 .totalPrice(order.getPrice())
                 .created(order.getCreated().format(dateTimeFormatter))
@@ -128,7 +125,6 @@ public class OrdersService {
                 .shipInfo(order.getShipInfo())
                 .orderItems(items)
                 .build();
-        return orderResponse;
     }
 
     private ShippingType detectShippingType(String shippingType) {
