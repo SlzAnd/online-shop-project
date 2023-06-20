@@ -45,6 +45,7 @@ The Online Shop project is - currently in progress, with some backend functional
 #### Admin Page(products):
 <img src="imgs/Admin-page.png">
 -------------------------------------------------
+
 If you try to get access to the admin portal like a user...
 <img src="imgs/Login-USER-role.png">
 You'll see this error:
@@ -102,11 +103,10 @@ UI will be realized in the future!
 
 ## Next Steps
 As the project progresses, I will continue to refine the backend features and further enhance the online shopping experience. Future updates will include additional functionalities such as:
-- additional features for the admin page, such as sorting, product tracking, and order notifications.
-- user authentication,
-- order processing,
-- order tracking,
+- additional features for the admin page, such as operations with orders(order tracking, change status, order notifications)
+- user management features,
+- integration with Nova Post API
 - payment integration,
-- UI
+- mobile app for clients
 
 Thank you for your interest in my project. Feel free to explore the code and project structure. If you have any questions or suggestions, please don't hesitate to reach out!
