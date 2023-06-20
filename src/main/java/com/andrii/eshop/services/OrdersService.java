@@ -74,17 +74,17 @@ public class OrdersService {
         ShippingType shippingType = detectShippingType(orderRequest.getAddress().getShippingType());
 
         // create ship info object with all necessary info and save in the DB
-        ShipInfo shipInfo = ShipInfo.builder()
-                .country(orderRequest.getAddress().getCountry())
-                .shippingType(shippingType)
-                .region(orderRequest.getAddress().getRegion())
-                .city(orderRequest.getAddress().getCity())
-                .warehouseNumber(orderRequest.getAddress().getWarehouseNumber())
-                .build();
+        ShipInfo shipInfo = new ShipInfo(
+                shippingType,
+                orderRequest.getAddress().getCountry(),
+                orderRequest.getAddress().getRegion(),
+                orderRequest.getAddress().getCity(),
+                orderRequest.getAddress().getWarehouseNumber()
+        );
 
         shipInfoRepository.save(shipInfo);
 
-//        // get user info and save this object in the DB
+        // get user info and save this object in the DB
         UserInfo userInfo = orderRequest.getUser();
         userInfoRepository.save(userInfo);
 
@@ -121,6 +121,7 @@ public class OrdersService {
                 .id(order.getId())
                 .totalPrice(order.getPrice())
                 .created(order.getCreated().format(dateTimeFormatter))
+                .status(order.getStatus())
                 .userInfo(order.getCustomer())
                 .shipInfo(order.getShipInfo())
                 .orderItems(items)
@@ -134,5 +135,48 @@ public class OrdersService {
             case "MIST_EXPRESS" -> ShippingType.MIST_EXPRESS;
             default -> ShippingType.SELF_PICKUP;
         };
+    }
+
+    private OrderStatus detectOrderStatus(String status) {
+        return switch (status) {
+            case "CREATED" -> OrderStatus.CREATED;
+            case "IN_PROGRESS" -> OrderStatus.IN_PROGRESS;
+            case "SHIPPED" -> OrderStatus.SHIPPED;
+            default -> OrderStatus.CANCELLED;
+        };
+    }
+
+    public OrderResponse getOrderById(long orderId) {
+        Order order = orderRepository.findById(orderId).orElse(null);
+
+        OrderResponse response = null;
+        if (order != null) {
+            List<OrderResponse.Item> items = createOrderItemsForResponse(order);
+            response = createOrderResponse(order, items);
+        }
+
+        return response;
+    }
+
+    public OrderResponse updateOrderStatus(long orderId, String newStatus) {
+        Order order = orderRepository.findById(orderId).orElse(null);
+
+        OrderResponse response = null;
+        if (order != null) {
+            order.setStatus(detectOrderStatus(newStatus));
+            orderRepository.save(order);
+            List<OrderResponse.Item> items = createOrderItemsForResponse(order);
+            response = createOrderResponse(order, items);
+        }
+
+        return response;
+    }
+
+    public boolean deleteOrder(long orderId) {
+        if (orderRepository.existsById(orderId)) {
+            orderRepository.deleteById(orderId);
+            return true;
+        }
+        return false;
     }
 }

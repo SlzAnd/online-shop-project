@@ -6,6 +6,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
+
 
 @Entity
 @Getter
@@ -30,7 +32,15 @@ public class Order {
     }
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(
+            name = "order_sequence",
+            sequenceName = "order_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = SEQUENCE,
+            generator = "order_sequence"
+    )
     private Long id;
 
     @Column(nullable = false)
@@ -45,7 +55,7 @@ public class Order {
     private UserInfo customer;
 
     @OneToMany
-    @JoinColumn(name = "order_item_id", nullable = true)
+    @JoinColumn(name = "order_item_id")
     private List<OrderItem> items;
 
     @OneToOne

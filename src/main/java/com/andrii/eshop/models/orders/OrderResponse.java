@@ -1,12 +1,10 @@
 package com.andrii.eshop.models.orders;
 
-import com.andrii.eshop.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,6 +15,7 @@ public class OrderResponse {
     private Long id;
     private double totalPrice;
     private String created;
+    private OrderStatus status;
     private UserInfo userInfo;
     private ShipInfo shipInfo;
     private List<Item> orderItems;
