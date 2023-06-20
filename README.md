@@ -57,13 +57,13 @@ You'll see this error:
 <img src="imgs/Create-product-1.png">
 <img src="imgs/Create-product-2.png">
 
--------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 #### View product:
 <img src="imgs/View-product-1.png">
 <img src="imgs/View-product-2.png">
 
--------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 #### Update product:
 <img src="imgs/Edit-product-1.png">
@@ -73,30 +73,31 @@ Admin can see all images in this window and can delete images when clicking on t
 At the end of updating the product, you should press the "Update Product" button.
 <img src="imgs/Edit-product-4.png">
 
--------------------------------------------------
+--------------------------------------------------------------------------------------------------
+
 
 #### Delete product:
 <img src="imgs/Delete-product-1.png">
 <img src="imgs/Delete-product-2.png">
 
--------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 #### Search products:
 <img src="imgs/Search-products.png">
 
---------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 
 The integration with AWS S3 for image storage and retrieval is also in place, ensuring efficient image management within the online shop.
 #### Each product has his own folder where stored images for this product:
 <img src="imgs/s3-folders.png">
 
--------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 #### Where stored images for this product:
 <img src="imgs/s3-images.png">
 
--------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 React has been used for specific functionality, enhancing the user experience while primarily emphasizing my Java and Spring expertise.
 UI will be realized in the future!
