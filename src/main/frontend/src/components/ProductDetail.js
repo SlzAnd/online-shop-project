@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../utils/axiosConfig";
 import { Modal, Button } from "react-bootstrap";
+import axiosInstance from "../utils/axiosConfig";
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-import '../App.css'
-
-
+import '../App.css';
 
 const ProductDetail = ({ productId, onClose }) => {
     const [product, setProduct] = useState(null);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
     useEffect(() => {
         // Fetch product details using the productId
@@ -21,8 +22,29 @@ const ProductDetail = ({ productId, onClose }) => {
             });
     }, [productId]);
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setIsImageModalOpen(false);
+    };
+
+    const EnlargedImageModal = ({ imageUrl, onClose }) => {
+        return (
+            <Modal show={true} onHide={onClose} centered className="enlarged-image-modal">
+                <Modal.Body>
+                    <img src={imageUrl} className="enlarged-image" alt="Enlarged" />
+                </Modal.Body>
+            </Modal>
+        );
+    };
+
+    const handleShowImage = (currentIndex) => {
+        setSelectedImageIndex(currentIndex);
+        setIsModalOpen(true);
+        setIsImageModalOpen(true);
+    }
+
     return (
-        <Modal show={true} onHide={onClose} size="lg">
+        <Modal show={true} onHide={onClose} size="lg" className="main-modal">
             <Modal.Header closeButton>
                 <Modal.Title>Product Details</Modal.Title>
             </Modal.Header>
@@ -35,35 +57,39 @@ const ProductDetail = ({ productId, onClose }) => {
                         </div>
                         <div id="carousel" className="carousel slide mt-2">
                             <div className="carousel-inner">
-                                    {product.image.map((img, index) => {
-                                        return (
-                                            index === 0
-                                            ? <div className="carousel-item active" key={index}>
-                                                  <div key={index} className="d-flex justify-content-center align-items-center carousel-img-container ">
-                                                    <img src={img}
-                                                      className="d-block w-100 carousel-image"
-                                                      alt="index"
+                                {product.image.map((img, index) => {
+                                    return (
+                                        index === selectedImageIndex ? (
+                                            <div className="carousel-item active" key={index}>
+                                                <div key={index} className="d-flex justify-content-center align-items-center carousel-img-container">
+                                                    <img
+                                                        src={img}
+                                                        className="d-block w-100 carousel-image"
+                                                        alt={index}
+                                                        onClick={() => handleShowImage(index)}
                                                     />
-                                                  </div>
+                                                </div>
                                             </div>
-                                            : <div className="carousel-item" key={index}>
-                                                    <div className="d-flex justify-content-center align-items-center carousel-img-container ">
-                                                        <img src={img}
-                                                             className="d-block w-100 carousel-image"
-                                                             alt="index"
-                                                        />
-                                                    </div>
+                                        ) : (
+                                            <div className="carousel-item" key={index}>
+                                                <div className="d-flex justify-content-center align-items-center carousel-img-container">
+                                                    <img
+                                                        src={img}
+                                                        className="d-block w-100 carousel-image"
+                                                        alt={index}
+                                                        onClick={() => handleShowImage(index)}
+                                                    />
+                                                </div>
                                             </div>
                                         )
-                                    } )}
+                                    );
+                                })}
                             </div>
-                            <button className="carousel-control-prev" type="button" data-bs-target="#carousel"
-                                    data-bs-slide="prev">
+                            <button className="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
                                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span className="visually-hidden">Previous</span>
                             </button>
-                            <button className="carousel-control-next" type="button" data-bs-target="#carousel"
-                                    data-bs-slide="next">
+                            <button className="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
                                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span className="visually-hidden">Next</span>
                             </button>
@@ -86,6 +112,16 @@ const ProductDetail = ({ productId, onClose }) => {
                     Close
                 </Button>
             </Modal.Footer>
+
+            {/* Enlarged Image Modal */}
+            {isImageModalOpen && (
+                <EnlargedImageModal
+                    imageUrl={product && product.image[selectedImageIndex]}
+                    onClose={closeModal}
+                />
+            )}
+
+            {isImageModalOpen && <div className="obscure-background"></div>}
         </Modal>
     );
 };

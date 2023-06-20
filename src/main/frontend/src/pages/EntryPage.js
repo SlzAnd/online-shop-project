@@ -11,8 +11,8 @@ const EntryPage = () => {
     };
 
     return (
-        <div className="container mt-4 ">
-            <h2>Administration Portal</h2>
+        <div className="container">
+            <h2 className="pt-4">Administration Portal</h2>
             <div className="container d-flex justify-content-center align-items-center vh-100 ">
                     <div className="card mb-4">
                         <div className="card-body">

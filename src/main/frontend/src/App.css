@@ -1,4 +1,6 @@
 .App {
+  background-color: #EAF2F8;
+  min-height: 100vh;
   text-align: center;
 }
 
@@ -233,7 +235,7 @@ input {
 }
 
 .carousel-img-container {
-  height: 600px;
+  height: 300px;
 }
 
 .image-preview-container {
@@ -286,6 +288,7 @@ input {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  cursor: zoom-in;
 }
 
 .card-bg {
@@ -298,4 +301,33 @@ input {
 
 .navbar-custom {
   height: 100px;
+}
+
+.enlarged-image-modal{
+  border: none;
+  box-shadow: none;
+}
+
+.enlarged-image-modal .modal-content {
+  background-color: transparent;
+}
+
+.enlarged-image-modal .modal-body {
+  padding: 0;
+}
+
+.enlarged-image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.obscure-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1050;
 }
