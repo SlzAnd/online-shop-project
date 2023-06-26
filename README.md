@@ -131,7 +131,7 @@ UI will be realized in the future!
 
 ## Next Steps
 As the project progresses, I will continue to refine the backend features and further enhance the online shopping experience. Future updates will include additional functionalities such as:
-- additional features for the admin page, such as operations with orders(order tracking, change status, order notifications)
+- additional features for the admin page, such as operations with orders(order notifications)
 - user management features,
 - integration with Nova Post API
 - payment integration,
