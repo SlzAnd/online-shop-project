@@ -1,11 +1,14 @@
 package com.andrii.eshop.controllers;
 
+import com.andrii.eshop.config.OrderUpdateHandler;
 import com.andrii.eshop.models.orders.OrderRequest;
 import com.andrii.eshop.models.orders.OrderResponse;
 import com.andrii.eshop.services.OrdersService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.socket.WebSocketHandler;
 
 import java.util.List;
 
@@ -15,10 +18,12 @@ import java.util.List;
 public class OrdersController {
 
     public final OrdersService service;
+    public final OrderUpdateHandler orderUpdateHandler;
 
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderRequest orderRequest) {
         OrderResponse orderResponse = service.createOrder(orderRequest);
+        orderUpdateHandler.sendUpdateToAllClients(orderResponse);
         return ResponseEntity.ok(orderResponse);
     };
 
@@ -48,8 +53,10 @@ public class OrdersController {
                                                            ) {
         OrderResponse response = service.updateOrderStatus(order_id, newStatus);
 
-        if(response != null)
+        if(response != null) {
+            orderUpdateHandler.sendUpdateToAllClients(response);
             return ResponseEntity.ok(response);
+        }
         else
             return ResponseEntity.badRequest().build();
     }

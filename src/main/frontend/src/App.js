@@ -12,7 +12,6 @@ import AccessErrorPage from "./pages/AccessErrorPage";
 
 
 const App = () => {
-    const userRole = localStorage.getItem('role');
     return (
         <div className="App">
             <Router>

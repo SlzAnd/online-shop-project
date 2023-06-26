@@ -3,6 +3,7 @@ import NavBar from "../components/NavBar";
 import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
+import OrderManager from "../components/OrderManager";
 
 
 const AdminPage = () => {
@@ -91,7 +92,7 @@ const AdminPage = () => {
             </div>
             <div className="container mt-3">
                 {activeSection === 'Products' && <ProductList productList={productList} updateProducts={updateProductList} />}
-                {/*{activeSection === 'Orders' && <OrderList orderList={orderList} />}*/}
+                {activeSection === 'Orders' && <OrderManager/>}
                 {/* Add more sections and corresponding components */}
             </div>
         </div>

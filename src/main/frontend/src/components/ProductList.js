@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import axiosInstance from "../utils/axiosConfig";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Button, Modal} from "react-bootstrap";
-import ProductDetail from "./ProductDetail";
+import ProductDetails from "./ProductDetails";
 import EditProductForm from "./EditProductForm";
 
 const ProductList = ({productList, updateProducts}) => {
@@ -78,7 +78,7 @@ const ProductList = ({productList, updateProducts}) => {
                 })}
                 </tbody>
                 {selectedProductId && (
-                    <ProductDetail
+                    <ProductDetails
                         productId={selectedProductId}
                         onClose={() => setSelectedProductId(null)}
                     />

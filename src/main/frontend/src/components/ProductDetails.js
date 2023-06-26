@@ -5,10 +5,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import '../App.css';
 
-const ProductDetail = ({ productId, onClose }) => {
+const ProductDetails = ({ productId, onClose }) => {
     const [product, setProduct] = useState(null);
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
     useEffect(() => {
@@ -23,7 +22,6 @@ const ProductDetail = ({ productId, onClose }) => {
     }, [productId]);
 
     const closeModal = () => {
-        setIsModalOpen(false);
         setIsImageModalOpen(false);
     };
 
@@ -39,7 +37,6 @@ const ProductDetail = ({ productId, onClose }) => {
 
     const handleShowImage = (currentIndex) => {
         setSelectedImageIndex(currentIndex);
-        setIsModalOpen(true);
         setIsImageModalOpen(true);
     }
 
@@ -126,4 +123,4 @@ const ProductDetail = ({ productId, onClose }) => {
     );
 };
 
-export default ProductDetail;
+export default ProductDetails;
