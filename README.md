@@ -111,6 +111,20 @@ The integration with AWS S3 for image storage and retrieval is also in place, en
 <img src="imgs/s3-images.png">
 
 --------------------------------------------------------------------------------------------------
+### Order Manager
+All new orders can be viewed in the first category "New Orders":
+<img src="imgs/new-orders.png">
+
+If you have more than 8 orders, you can change the page to see other orders:
+<img src="imgs/orders-paging.png">
+
+Also, you can change the order's status:
+<img src="imgs/in-progress.png">
+
+And most important thing is detail information about order:
+<img src="imgs/order-details.png">
+
+-----------------------------------------------
 
 React has been used for specific functionality, enhancing the user experience while primarily emphasizing my Java and Spring expertise.
 UI will be realized in the future!
