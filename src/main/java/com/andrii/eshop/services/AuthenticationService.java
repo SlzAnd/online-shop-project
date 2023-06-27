@@ -6,6 +6,7 @@ import com.andrii.eshop.auth.RegisterRequest;
 import com.andrii.eshop.config.JwtService;
 import com.andrii.eshop.models.auth.Role;
 import com.andrii.eshop.models.users.User;
+import com.andrii.eshop.models.users.UserResponse;
 import com.andrii.eshop.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,14 +24,14 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationResponse registerUser(RegisterRequest request) {
+    public UserResponse registerUser(RegisterRequest request) {
         return register(request, Role.USER);
     }
-    public AuthenticationResponse registerAdmin(RegisterRequest request) {
+    public UserResponse registerAdmin(RegisterRequest request) {
         return register(request, Role.ADMIN);
     }
 
-    private AuthenticationResponse register(RegisterRequest request, Role role) {
+    private UserResponse register(RegisterRequest request, Role role) {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -40,12 +41,8 @@ public class AuthenticationService {
                 .role(role)
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
 
-        return AuthenticationResponse
-                .builder()
-                .token(jwtToken)
-                .build();
+        return new UserResponse(user);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

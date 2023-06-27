@@ -3,6 +3,7 @@ package com.andrii.eshop.controllers;
 import com.andrii.eshop.auth.AuthenticationRequest;
 import com.andrii.eshop.auth.AuthenticationResponse;
 import com.andrii.eshop.auth.RegisterRequest;
+import com.andrii.eshop.models.users.UserResponse;
 import com.andrii.eshop.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register (
+    public ResponseEntity<UserResponse> register (
             @RequestBody RegisterRequest request
      ) {
         return ResponseEntity.ok(service.registerUser(request));
@@ -25,7 +26,7 @@ public class AuthenticationController {
 
     @PostMapping("/register-admin")
     @PreAuthorize("hasAuthority('user:create')")
-    public ResponseEntity<AuthenticationResponse> registerAdmin (
+    public ResponseEntity<UserResponse> registerAdmin (
             @RequestBody RegisterRequest request
      ) {
         return ResponseEntity.ok(service.registerAdmin(request));

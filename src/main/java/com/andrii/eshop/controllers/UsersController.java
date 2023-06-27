@@ -1,11 +1,10 @@
 package com.andrii.eshop.controllers;
 
 import com.andrii.eshop.models.auth.Role;
-import com.andrii.eshop.models.users.User;
+import com.andrii.eshop.models.users.UserResponse;
 import com.andrii.eshop.models.users.UserUpdateRequest;
 import com.andrii.eshop.services.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +24,10 @@ public class UsersController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<User>> getUsers(
+    public ResponseEntity<List<UserResponse>> getUsers(
             @RequestParam(name = "search", required = false) String searchQuery
     ) {
-        List<User> users = service.getAllUsers(searchQuery);
+        List<UserResponse> users = service.getAllUsers(searchQuery);
         if (users != null)
             return ResponseEntity.ok(users);
         else
@@ -37,10 +36,10 @@ public class UsersController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public ResponseEntity<User> updateUser( @PathVariable int id,
+    public ResponseEntity<UserResponse> updateUser( @PathVariable int id,
         @RequestBody UserUpdateRequest userUpdateRequest
     ) {
-        User updatedUser = service.updateUserProfile(id, userUpdateRequest);
+        UserResponse updatedUser = service.updateUserProfile(id, userUpdateRequest);
 
         if(updatedUser != null)
             return ResponseEntity.ok(updatedUser);

@@ -2,10 +2,12 @@ package com.andrii.eshop.services;
 
 import com.andrii.eshop.models.auth.Role;
 import com.andrii.eshop.models.users.User;
+import com.andrii.eshop.models.users.UserResponse;
 import com.andrii.eshop.models.users.UserUpdateRequest;
 import com.andrii.eshop.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,19 +19,23 @@ public class UserService {
         this.repository = repository;
     }
 
-    public List<User> getAllUsers(String searchQuery) {
+    public List<UserResponse> getAllUsers(String searchQuery) {
         List<User> users;
+        List<UserResponse> userResponses = new ArrayList<>();
         if(searchQuery != null) {
             if (searchQuery.matches("-?\\d+")) { //check if search query is phone number
                 users = repository.findAllByPhoneNumberContainingIgnoreCase(searchQuery);
-            } else
+            } else {
                 users = repository.findAllByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCaseOrEmailContainingIgnoreCase(searchQuery, searchQuery, searchQuery);
+            }
         }else
             users = repository.findAll();
-        return users;
+        if(!users.isEmpty())
+            userResponses = users.stream().map(UserResponse::new).toList();
+        return userResponses;
     }
 
-    public User updateUserProfile(int userId, UserUpdateRequest userUpdateRequest) {
+    public UserResponse updateUserProfile(int userId, UserUpdateRequest userUpdateRequest) {
         User currentUser = repository.findById(userId).orElse(null);
 
         if(currentUser != null) {
@@ -42,9 +48,9 @@ public class UserService {
             if (userUpdateRequest.phoneNumber() != null)
                 currentUser.setPhoneNumber(userUpdateRequest.phoneNumber());
             repository.save(currentUser);
+            return new UserResponse(currentUser);
         }
-
-        return currentUser;
+        return null;
     }
 
     public boolean changeUserRole(int id, Role role) {
