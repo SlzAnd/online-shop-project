@@ -1,4 +1,4 @@
-package com.andrii.eshop.models;
+package com.andrii.eshop.models.users;
 
 import com.andrii.eshop.models.auth.Role;
 import jakarta.persistence.*;

@@ -16,8 +16,7 @@ public enum Role {
 
     USER(
         Set.of(
-            PRODUCT_READ,
-                USER_READ
+            PRODUCT_READ
         )
     ),
     ADMIN(

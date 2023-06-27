@@ -5,7 +5,7 @@ import com.andrii.eshop.auth.AuthenticationResponse;
 import com.andrii.eshop.auth.RegisterRequest;
 import com.andrii.eshop.config.JwtService;
 import com.andrii.eshop.models.auth.Role;
-import com.andrii.eshop.models.User;
+import com.andrii.eshop.models.users.User;
 import com.andrii.eshop.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,6 +35,7 @@ public class AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(role)
                 .build();

@@ -36,11 +36,6 @@ const OrderManager = () => {
         handleFilterChange(filter);
     }, [orders, filter]);
 
-    const handleSearchSubmit = async (event) => {
-        event.preventDefault();
-        // Implement search functionality here
-    };
-
     const updateOrderStatus = async (orderId, currentStatus, changeTo) => {
         let newStatus = '';
         switch (currentStatus) {
