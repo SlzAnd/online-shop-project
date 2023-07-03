@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from "axios";
 import OrderManager from "../components/OrderManager";
+import UserManagement from "../components/UserManagement";
 
 
 const AdminPage = () => {
@@ -93,6 +94,7 @@ const AdminPage = () => {
             <div className="container mt-3">
                 {activeSection === 'Products' && <ProductList productList={productList} updateProducts={updateProductList} />}
                 {activeSection === 'Orders' && <OrderManager/>}
+                {activeSection === 'Users' && <UserManagement/>}
                 {/* Add more sections and corresponding components */}
             </div>
         </div>

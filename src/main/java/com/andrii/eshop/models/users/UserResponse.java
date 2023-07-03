@@ -1,7 +1,12 @@
 package com.andrii.eshop.models.users;
 
 import com.andrii.eshop.models.auth.Role;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UserResponse {
 
     private final int id;
