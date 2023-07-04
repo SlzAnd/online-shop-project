@@ -1,14 +1,22 @@
-**This project is already in the development process!!**
+**This project is during the development process!!**
 
 -------------------------------------------------
 
 # Online Shop - Java Spring Boot Project
 
-Welcome to the Online Shop project! This e-commerce web application showcases my skills in Java and the Spring framework. The project utilizes Java Spring Boot as the backend framework and integrates with AWS S3 for secure storage, retrieval, and deletion of product images.
-## Last update:
-I'm excited to share the latest updates in my app for small businesses. The project has undergone significant improvements, for example, we created first prototype of UI for Administration Portal (you can see screenshots below) and also, now all the examples featured in the app are real business owned by my friends. So don't worry, even if you don't want to hire me as a developer in your company, you can still enjoy something truly delicious when you make a purchase through this shop. So, if you're craving mouthwatering gingerbreads or other delightful treats, follow the link: https://www.instagram.com/naretin_pryanik/
+Welcome to the Online Shop project! This e-commerce web application showcases my skills in Java and the Spring framework, React.js and PostgreSQL. The project utilizes Java Spring Boot as the backend framework and integrates with AWS S3 for secure storage, retrieval, and deletion of product images.
+## Great news!
+I'm excited to share the latest updates in my app for small businesses. The project has undergone significant improvements, now all the examples featured in the app are real business owned by my friends. So don't worry, even if you don't want to hire me as a developer in your company, you can still enjoy something truly delicious when you purchase through this shop. So, if you're craving mouthwatering gingerbreads or other delightful treats, follow the link: https://www.instagram.com/naretin_pryanik/
 and indulge yourself in a tasty shopping experience while supporting small businesses.
 In my opinion, it's a win-win situation, where you get to satisfy your taste buds and help entrepreneurs thrive!
+And after that, you can remember me and give me a chance to become part of your development team ;)
+
+## Last updates:
+Last updates were added to this project(new goes first), screenshots you can see below:
+- created User Management
+- created Order Manager
+- created main operations with products
+
 ## About Me
 I am a passionate developer with expertise in Java and a strong focus on backend development. With a solid understanding of the Spring framework, I have built this Online Shop project to demonstrate my proficiency in creating robust and scalable web applications.
 
@@ -18,16 +26,15 @@ Contacts:
 
 [Link](https://mail.google.com/mail/?view=cm&to=seleznov.andriy@gmail.com) Email
 ## Project Focus
-The primary goal of this project is to highlight my skills in Java and Spring. By leveraging the power of Java Spring Boot, I want to implement essential backend functionalities such as user authentication, product management, and order processing. Also, I use AWS S3 for storing product images and in the future, I want to create a simple but good UI for this project using React.
+The primary goal of this project is to highlight my skills in Java and Spring. By leveraging the power of Java Spring Boot, I want to implement essential backend functionalities such as user authentication, product management, and order processing. Also, I use AWS S3 for storing product images and React.js + Bootstrap for a simple but good UI.
 ## AWS S3 Integration
 To ensure efficient image management, this Online Shop project integrates with AWS S3 (Simple Storage Service). By leveraging AWS S3, I have implemented secure storage, retrieval, and removal of product images. This integration allows for optimal image handling and delivery within the online shop.
 
-## Limited Usage of React
-While primarily focusing on Java and Spring, I have selectively utilized React for specific functionalities within the project. By integrating with React, I aim to demonstrate my ability to work with front-end technologies and create interactive features, complementing the robust backend built with Java Spring Boot.
+## Usage of React
+By integrating with React, I aim to demonstrate my ability to work with front-end technologies and create interactive features, complementing the robust backend built with Java Spring Boot.
 
-## Project Status and Progress
-The Online Shop project is - currently in progress, with some backend functionalities already implemented. Firstly, I decided to focus on the admin page. For example, was created main endpoints for manipulations with products(CRUD).
-## Administration portal. 
+
+## Administration portal.
 ### Enter page / Login page / Admin Page
 
 #### Enter Page:
@@ -102,7 +109,7 @@ At the end of updating the product, you should press the "Update Product" button
 
 
 The integration with AWS S3 for image storage and retrieval is also in place, ensuring efficient image management within the online shop.
-#### Each product has his own folder where stored images for this product:
+#### Each product has its folder where stored images for this product are:
 <img src="imgs/s3-folders.png">
 
 --------------------------------------------------------------------------------------------------
@@ -121,20 +128,46 @@ If you have more than 8 orders, you can change the page to see other orders:
 Also, you can change the order's status:
 <img src="imgs/in-progress.png">
 
-And most important thing is detail information about order:
+And the most important thing is detailed information about the order:
 <img src="imgs/order-details.png">
 
 -----------------------------------------------
 
-React has been used for specific functionality, enhancing the user experience while primarily emphasizing my Java and Spring expertise.
-UI will be realized in the future!
+### User Management
+All users can be viewed in the first filter 'All':
+<img src="imgs/user-management-page.png">
+
+Change the filter option to 'Management' and you will see administrators only:
+<img src="imgs/user-management-filter-1.png">
+
+Change the filter option to 'Customers' and you will see users only:
+<img src="imgs/user-management-filter-2.png">
+
+On the left side of filtering options, you can see the button 'Create new administrator' because only the admin has permission to create a new admin:
+<img src="imgs/create-new-admin-btn.png">
+
+when you click on this button - this form will be shown:
+<img src="imgs/register-new-admin-window.png">
+
+Also, each user has a role. If you want to change the role for any user you should select a new role from the dropdown menu and click the button 'Change Role':
+<img src="imgs/change-role.png">
+
+If you want to update information about the user:
+<img src="imgs/update-user-1.png">
+<img src="imgs/update-user-2.png">
+
+And you can delete the user by clicking on the button:
+<img src="imgs/delete-user-1.png">
+Then you'll see this confirmation window:
+<img src="imgs/delete-user-2.png">
+
+-------------------------------------------------------
 
 ## Next Steps
 As the project progresses, I will continue to refine the backend features and further enhance the online shopping experience. Future updates will include additional functionalities such as:
+- a mobile app for customers
 - additional features for the admin page, such as operations with orders(order notifications)
-- user management features,
 - integration with Nova Post API
-- payment integration,
-- mobile app for clients
+- payment integration
 
 Thank you for your interest in my project. Feel free to explore the code and project structure. If you have any questions or suggestions, please don't hesitate to reach out!

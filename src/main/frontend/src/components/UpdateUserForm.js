@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, Link} from 'react-router-dom';
+import axios from "axios";
 import axiosInstance from "../utils/axiosConfig";
 
-const RegisterPage = ({onUserCreated, onCloseModal}) => {
-    const navigate = useNavigate();
+const UpdateUserForm = ({onUserUpdated, onCloseModal, user}) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [password, setPassword] = useState('');
     const [formErrors, setFormErrors] = useState({});
 
-    const handleRegister = async (e) => {
+    useEffect(() => {
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
+        setEmail(user.email);
+        setPhoneNumber(user.phoneNumber);
+    }, []);
+
+    const handleUpdateInfo = async (e) => {
         e.preventDefault();
 
         // Perform form validation
         const form = e.currentTarget;
         if (form.checkValidity()) {
             try {
-                const response = await axiosInstance.post('/auth/register-admin', {
+                const response = await axiosInstance.put(`/users/${user.id}`, {
                     firstName,
                     lastName,
                     email,
                     phoneNumber,
-                    password,
                 });
                 if (response.status === 200) {
                     // Registration successful, navigate to login page
-                    onUserCreated(response.data)
+                    onUserUpdated(response.data)
                     onCloseModal()
                 } else {
                     // Handle registration error
-                    console.error('Registration failed.');
+                    console.error('Updating user info failed.');
                 }
             } catch (error) {
                 console.error('Error occurred during registration:', error);
@@ -55,7 +60,7 @@ const RegisterPage = ({onUserCreated, onCloseModal}) => {
 
     return (
         <div className="container mt-4">
-            <form onSubmit={handleRegister} noValidate>
+            <form onSubmit={handleUpdateInfo} noValidate>
                 <div className="mb-3">
                     <label htmlFor="firstName" className="form-label">
                         First name
@@ -83,7 +88,7 @@ const RegisterPage = ({onUserCreated, onCloseModal}) => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">
-                        Email *
+                        Email
                     </label>
                     <input
                         type="email"
@@ -107,29 +112,12 @@ const RegisterPage = ({onUserCreated, onCloseModal}) => {
                         onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">
-                        Password *
-                    </label>
-                    <input
-                        type="password"
-                        className={`form-control ${formErrors.password && 'is-invalid'}`}
-                        id="password"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    {formErrors.password && <div className="invalid-feedback">{formErrors.password}</div>}
-                </div>
                 <button type="submit" className="btn btn-primary">
-                    Register
+                    Update
                 </button>
-                <div className="mt-2 text-muted">
-                    Fields marked with * are required.
-                </div>
             </form>
         </div>
     );
 };
 
-export default RegisterPage;
+export default UpdateUserForm;
